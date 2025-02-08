@@ -12,7 +12,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { deleteCar, getCars } from "../api/carapi";
 import AddCar from "./AddCar";
 import EditCar from "./EditCar";
-import AddOwner from "./AddOwner";
 
 function Carlist() {
   const [open, setOpen] = useState(false);
@@ -100,4 +99,5 @@ function Carlist() {
     );
   }
 }
+
 export default Carlist;
