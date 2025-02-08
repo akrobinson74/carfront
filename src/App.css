@@ -43,3 +43,37 @@
 .read-the-docs {
   color: #888;
 }
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+/* body {
+  font-family: system-ui;
+  background-color: white;
+} */
+
+nav {
+  padding: 10px;
+  margin-bottom: 10px;
+  background: #1976d2;
+}
+
+ul {
+  list-style-type: none;
+}
+
+li {
+  display: inline;
+  margin-right: 20px;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+a:hover {
+  color: #eee;
+}

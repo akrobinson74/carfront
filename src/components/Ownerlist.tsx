@@ -9,23 +9,22 @@ import {
 } from "@mui/x-data-grid";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { deleteCar, getCars } from "../api/carapi";
-import AddCar from "./AddCar";
-import EditCar from "./EditCar";
+import { deleteOwner, getOwners } from "../api/carapi";
 import AddOwner from "./AddOwner";
+import EditOwner from "./EditOwner";
 
-function Carlist() {
+const OwnerList = () => {
   const [open, setOpen] = useState(false);
   const queryClient = useQueryClient();
   const { data, error, isSuccess } = useQuery({
-    queryKey: ["cars"],
-    queryFn: getCars,
+    queryKey: ["owners"],
+    queryFn: getOwners,
   });
 
-  const { mutate } = useMutation(deleteCar, {
+  const { mutate } = useMutation(deleteOwner, {
     onSuccess: () => {
       setOpen(true);
-      queryClient.invalidateQueries({ queryKey: ["cars"] });
+      queryClient.invalidateQueries({ queryKey: ["owners"] });
     },
     onError: (err: Error) => {
       console.error(err);
@@ -33,12 +32,8 @@ function Carlist() {
   });
 
   const columns: GridColDef[] = [
-    { field: "brand", headerName: "Brand", width: 200 },
-    { field: "model", headerName: "Model", width: 200 },
-    { field: "color", headerName: "Color", width: 200 },
-    { field: "registrationNumber", headerName: "Reg.nr.", width: 150 },
-    { field: "modelYear", headerName: "Model Year", width: 150 },
-    { field: "price", headerName: "Price", width: 150 },
+    { field: "firstname", headerName: "First Name", width: 200 },
+    { field: "lastname", headerName: "Last Name", width: 200 },
     {
       field: "edit",
       headerName: "",
@@ -46,7 +41,9 @@ function Carlist() {
       sortable: false,
       filterable: false,
       disableColumnMenu: true,
-      renderCell: (params: GridCellParams) => <EditCar cardata={params.row} />,
+      renderCell: (params: GridCellParams) => (
+        <EditOwner ownerdata={params.row} />
+      ),
     },
     {
       field: "delete",
@@ -65,7 +62,7 @@ function Carlist() {
                 `Are you sure you want to delete ${params.row.brand} ${params.row.model}?`
               )
             ) {
-              mutate(params.row._links.car.href);
+              mutate(params.row._links.owner.href);
             }
           }}
         >
@@ -78,11 +75,11 @@ function Carlist() {
   if (!isSuccess) {
     return <span>Loading...</span>;
   } else if (error) {
-    return <span>Error when fetching cars...</span>;
+    return <span>Error when fetching owners...</span>;
   } else {
     return (
       <>
-        <AddCar />
+        <AddOwner />
         <DataGrid
           rows={data}
           columns={columns}
@@ -94,10 +91,10 @@ function Carlist() {
           open={open}
           autoHideDuration={2000}
           onClose={() => setOpen(false)}
-          message="Car deleted"
+          message="Owner deleted"
         />
       </>
     );
   }
-}
-export default Carlist;
+};
+export default OwnerList;

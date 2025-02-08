@@ -32,3 +32,29 @@ export type CarResponse = {
     }
   };
 }
+
+export type Owner = {
+  firstname: string;
+  lastname: string;
+}
+
+export type OwnerEntry = {
+  owner: Owner,
+  url: string;
+}
+
+export type OwnerResponse = {
+  firstname: string;
+  lastname: string;
+  _links: {
+    self: {
+      href: string;
+    },
+    car: {
+      href: string;
+    },
+    owner: {
+      href: string;
+    }
+  };
+}
