@@ -3,32 +3,33 @@ import { Button } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Car } from "../types";
-import { addCar } from "../api/carapi";
+import { CarEntity } from "../types";
+import { addACar } from "../api/carapi";
 import CarDialogContent from "./CarDialogContent";
 
-function AddCar() {
+const AddCar = () => {
   // Add inside the AddCar component function
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
   // Add inside the AddCar component function
-  const { mutate } = useMutation(addCar, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(["cars"]);
-    },
-    onError: (err) => {
-      console.error(err);
-    },
-  });
+  // const { mutate } = useMutation(addCar, {
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries(["cars"]);
+  //   },
+  //   onError: (err) => {
+  //     console.error(err);
+  //   },
+  // });
 
   const [open, setOpen] = useState(false);
-  const [car, setCar] = useState<Car>({
+  const [car, setCar] = useState<CarEntity>({
+    id: 0,
     brand: "",
     model: "",
     color: "",
     registrationNumber: "",
     modelYear: 0,
     price: 0,
+    ownerId: 0,
   });
 
   const handleClickOpen = () => {
@@ -40,18 +41,22 @@ function AddCar() {
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(`Event: ${event.target.name}`);
     setCar({ ...car, [event.target.name]: event.target.value });
   };
 
   const handleSave = () => {
-    mutate(car);
+    // mutate(car);
+    addACar(car);
     setCar({
+      id: 0,
       brand: "",
       model: "",
       color: "",
       registrationNumber: "",
       modelYear: 0,
       price: 0,
+      ownerId: 0,
     });
     handleClose();
   };
@@ -69,5 +74,5 @@ function AddCar() {
       </Dialog>
     </>
   );
-}
+};
 export default AddCar;

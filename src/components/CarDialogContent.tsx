@@ -2,10 +2,12 @@
 import DialogContent from "@mui/material/DialogContent";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
-import { Car } from "../types";
+import { CarEntity } from "../types";
+import OwnerSelect from "./OwnerSelect";
+import React from "react";
 
 type DialogFormProps = {
-  car: Car;
+  car: CarEntity;
   handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
@@ -49,6 +51,7 @@ function CarDialogContent({ car, handleChange }: DialogFormProps) {
           value={car.price}
           onChange={handleChange}
         />
+        <OwnerSelect ownerdata={car.ownerId} handleChange={handleChange} />
       </Stack>
     </DialogContent>
   );

@@ -33,6 +33,23 @@ export type CarResponse = {
   };
 }
 
+export type CarEntity = {
+  id: number;
+  brand: string;
+  model: string;
+  color: string;
+  registrationNumber: string;
+  modelYear: number;
+  price: number;
+  ownerId: number;
+}
+
+export type OwnerEntity = {
+  ownerid: number;
+  firstname: string;
+  lastname: string;
+}
+
 export type Owner = {
   firstname: string;
   lastname: string;

@@ -9,27 +9,15 @@ import {
 } from "@mui/x-data-grid";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { deleteCar, getCars } from "../api/carapi";
+import { deleteCarById, getCarz } from "../api/carapi";
 import AddCar from "./AddCar";
 import EditCar from "./EditCar";
-import OwnerSelect from "./OwnerSelect";
 
-function Carlist() {
+const CarGrid = () => {
   const [open, setOpen] = useState(false);
-  const queryClient = useQueryClient();
   const { data, error, isSuccess } = useQuery({
     queryKey: ["cars"],
-    queryFn: getCars,
-  });
-
-  const { mutate } = useMutation(deleteCar, {
-    onSuccess: () => {
-      setOpen(true);
-      queryClient.invalidateQueries({ queryKey: ["cars"] });
-    },
-    onError: (err: Error) => {
-      console.error(err);
-    },
+    queryFn: getCarz,
   });
 
   const columns: GridColDef[] = [
@@ -42,9 +30,10 @@ function Carlist() {
     {
       field: "owner",
       headerName: "Owner",
-      renderCell: (params: GridCellParams) => (
-        <OwnerSelect cardata={params.row} />
-      ),
+      renderCell: (params: GridCellParams) =>
+        params.row.owner !== null
+          ? params.row.owner.firstname + " " + params.row.owner.lastname
+          : "",
     },
     {
       field: "edit",
@@ -72,7 +61,7 @@ function Carlist() {
                 `Are you sure you want to delete ${params.row.brand} ${params.row.model}?`
               )
             ) {
-              mutate(params.row._links.car.href);
+              deleteCarById(params.row.id);
             }
           }}
         >
@@ -94,7 +83,7 @@ function Carlist() {
           rows={data}
           columns={columns}
           disableRowSelectionOnClick={true}
-          getRowId={(row) => row._links.self.href}
+          getRowId={(row) => row.id}
           slots={{ toolbar: GridToolbar }}
         />
         <Snackbar
@@ -106,6 +95,6 @@ function Carlist() {
       </>
     );
   }
-}
+};
 
-export default Carlist;
+export default CarGrid;

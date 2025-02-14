@@ -7,46 +7,38 @@ import EditIcon from "@mui/icons-material/Edit";
 import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";
 import Tooltip from "@mui/material/Tooltip";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { Car, CarEntry, CarResponse } from "../types";
+import { CarEntity } from "../types";
 import CarDialogContent from "./CarDialogContent";
-import { updateCar } from "../api/carapi";
+import { updateCarById } from "../api/carapi";
 
 type FormProps = {
-  cardata: CarResponse;
+  cardata: CarEntity;
 };
-function EditCar({ cardata }: FormProps) {
-  // Get query client
-  const queryClient = useQueryClient();
+
+const EditCar = ({ cardata }: FormProps) => {
   const [open, setOpen] = useState(false);
-  const [car, setCar] = useState<Car>({
+  const [car, setCar] = useState<CarEntity>({
+    id: 0,
     brand: "",
     model: "",
     color: "",
     registrationNumber: "",
     modelYear: 0,
     price: 0,
-  });
-
-  // Use useMutation hook
-  const { mutate } = useMutation(updateCar, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(["cars"]);
-    },
-    onError: (err) => {
-      console.error(err);
-    },
+    ownerId: 0,
   });
 
   const handleClickOpen = () => {
     setCar({
+      id: cardata.id,
       brand: cardata.brand,
       model: cardata.model,
       color: cardata.color,
       registrationNumber: cardata.registrationNumber,
       modelYear: cardata.modelYear,
       price: cardata.price,
+      ownerId: cardata.ownerId,
     });
     setOpen(true);
   };
@@ -56,16 +48,16 @@ function EditCar({ cardata }: FormProps) {
   };
 
   const handleSave = () => {
-    const url = cardata._links.self.href;
-    const carEntry: CarEntry = { car, url };
-    mutate(carEntry);
+    updateCarById(car, car.id);
     setCar({
+      id: 0,
       brand: "",
       model: "",
       color: "",
       registrationNumber: "",
       modelYear: 0,
       price: 0,
+      ownerId: 0,
     });
     setOpen(false);
   };
@@ -92,5 +84,6 @@ function EditCar({ cardata }: FormProps) {
       </Dialog>
     </>
   );
-}
+};
+
 export default EditCar;

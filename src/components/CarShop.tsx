@@ -2,7 +2,7 @@ import AppBar from "@mui/material/AppBar";
 import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Carlist from "./Carlist";
+import CarGrid from "./CarGrid";
 
 const CarShop = () => {
   return (
@@ -13,7 +13,7 @@ const CarShop = () => {
           <Typography variant="h6">Car Shop</Typography>
         </Toolbar>
       </AppBar>
-      <Carlist />
+      <CarGrid />
     </>
   );
 };
