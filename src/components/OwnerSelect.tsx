@@ -13,14 +13,17 @@ const OwnerSelect = ({ ownerdata, handleChange }: FormProps) => {
   const [owners, setOwners] = useState<OwnerEntity[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const handleSelectChange = (event: SelectChangeEvent) => {
-    setOwnerId(Number(event.target.value));
+  const handleSelectChange = (e: SelectChangeEvent) => {
+    const { name, value } = e.target;
+    setOwnerId(Number(value));
     const changeEvent: ChangeEvent<HTMLInputElement> = {
+      // @ts-ignore
       target: {
-        name: "ownerId",
-        value: event.target.value as string,
+        name: name,
+        value: value,
       },
-      currentTarget: event.target,
+      // @ts-ignore
+      currentTarget: { name: name, value: value },
       type: "change",
       bubbles: true,
       cancelable: true,
