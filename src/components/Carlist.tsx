@@ -12,7 +12,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { deleteCar, getCars } from "../api/carapi";
 import AddCar from "./AddCar";
 import EditCar from "./EditCar";
-import OwnerSelect from "./OwnerSelect";
 
 function Carlist() {
   const [open, setOpen] = useState(false);
@@ -39,13 +38,6 @@ function Carlist() {
     { field: "registrationNumber", headerName: "Reg.nr.", width: 150 },
     { field: "modelYear", headerName: "Model Year", width: 150 },
     { field: "price", headerName: "Price", width: 150 },
-    {
-      field: "owner",
-      headerName: "Owner",
-      renderCell: (params: GridCellParams) => (
-        <OwnerSelect cardata={params.row} />
-      ),
-    },
     {
       field: "edit",
       headerName: "",
