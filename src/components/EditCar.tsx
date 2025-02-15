@@ -8,25 +8,20 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";
 import Tooltip from "@mui/material/Tooltip";
 
-import { CarEntity } from "../types";
+import { CarEntity, FullCarEntity } from "../types";
 import CarDialogContent from "./CarDialogContent";
 import { updateCarById } from "../api/carapi";
 
 type FormProps = {
-  cardata: CarEntity;
+  cardata: FullCarEntity;
+  handleFlush: () => void;
 };
 
-const EditCar = ({ cardata }: FormProps) => {
+const EditCar = ({ cardata, handleFlush }: FormProps) => {
   const [open, setOpen] = useState(false);
   const [car, setCar] = useState<CarEntity>({
-    id: 0,
-    brand: "",
-    model: "",
-    color: "",
-    registrationNumber: "",
-    modelYear: 0,
-    price: 0,
-    ownerId: 0,
+    ...cardata,
+    ownerId: cardata.owner?.ownerid,
   });
 
   const handleClickOpen = () => {
@@ -38,7 +33,7 @@ const EditCar = ({ cardata }: FormProps) => {
       registrationNumber: cardata.registrationNumber,
       modelYear: cardata.modelYear,
       price: cardata.price,
-      ownerId: cardata.ownerId,
+      ownerId: cardata.owner?.ownerid,
     });
     setOpen(true);
   };
@@ -60,6 +55,7 @@ const EditCar = ({ cardata }: FormProps) => {
       ownerId: 0,
     });
     setOpen(false);
+    handleFlush();
   };
 
   // Add handleChange function

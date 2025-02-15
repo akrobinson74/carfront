@@ -7,7 +7,11 @@ import { CarEntity } from "../types";
 import { addACar } from "../api/carapi";
 import CarDialogContent from "./CarDialogContent";
 
-const AddCar = () => {
+type CarProps = {
+  handleFlush: () => void;
+};
+
+const AddCar = ({ handleFlush }: CarProps) => {
   // Add inside the AddCar component function
   // const queryClient = useQueryClient();
   // Add inside the AddCar component function
@@ -58,6 +62,7 @@ const AddCar = () => {
       price: 0,
       ownerId: 0,
     });
+    handleFlush();
     handleClose();
   };
 

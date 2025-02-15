@@ -44,6 +44,17 @@ export type CarEntity = {
   ownerId: number;
 }
 
+export type FullCarEntity = {
+  id: number;
+  brand: string;
+  model: string;
+  color: string;
+  registrationNumber: string;
+  modelYear: number;
+  price: number;
+  owner: OwnerEntity;
+}
+
 export type OwnerEntity = {
   ownerid: number;
   firstname: string;

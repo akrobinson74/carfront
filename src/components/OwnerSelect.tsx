@@ -19,11 +19,11 @@ const OwnerSelect = ({ ownerdata, handleChange }: FormProps) => {
     const changeEvent: ChangeEvent<HTMLInputElement> = {
       // @ts-ignore
       target: {
-        name: name,
+        name: "ownerId",
         value: value,
       },
       // @ts-ignore
-      currentTarget: { name: name, value: value },
+      currentTarget: value,
       type: "change",
       bubbles: true,
       cancelable: true,
