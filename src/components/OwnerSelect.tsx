@@ -14,7 +14,7 @@ const OwnerSelect = ({ ownerdata, handleChange }: FormProps) => {
   const [isLoading, setIsLoading] = useState(true);
 
   const handleSelectChange = (e: SelectChangeEvent) => {
-    const { name, value } = e.target;
+    const value = e.target.value;
     setOwnerId(Number(value));
     const changeEvent: ChangeEvent<HTMLInputElement> = {
       // @ts-ignore

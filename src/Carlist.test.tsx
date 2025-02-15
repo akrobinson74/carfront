@@ -3,7 +3,7 @@ import { describe, expect, test } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom/vitest";
-import Carlist from "./components/Carlist";
+import CarGrid from "./components/CarGrid";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -16,20 +16,20 @@ const wrapper = ({ children }: { children: React.ReactNode }) => (
   <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
 );
 
-describe("Carlist tests", () => {
+describe("CarGrid tests", () => {
   test("component renders", () => {
-    render(<Carlist />, { wrapper });
+    render(<CarGrid />, { wrapper });
     expect(screen.getByText(/Loading/i)).toBeInTheDocument();
   });
 
   test("Cars are fetched", async () => {
-    render(<Carlist />, { wrapper });
+    render(<CarGrid />, { wrapper });
     await waitFor(() => screen.getByText(/New Car/i));
     expect(screen.getByText(/Ford/i)).toBeInTheDocument();
   });
 
   test("Open new car modal", async () => {
-    render(<Carlist />, { wrapper });
+    render(<CarGrid />, { wrapper });
     await waitFor(() => screen.getByText(/New Car/i));
     await userEvent.click(screen.getByText(/New Car/i));
     expect(screen.getByText(/Save/i)).toBeInTheDocument();
