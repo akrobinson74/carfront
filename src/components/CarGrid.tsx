@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import Snackbar from "@mui/material/Snackbar";
 import {
   DataGrid,
@@ -14,19 +14,11 @@ import AddCar from "./AddCar";
 import EditCar from "./EditCar";
 
 const CarGrid = () => {
-  const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
   const { data, error, isSuccess } = useQuery({
     queryKey: ["cars"],
     queryFn: getCarz,
   });
-
-  const handleFlush = () => {
-    console.log("Should flush cache");
-    queryClient.invalidateQueries({
-      queryKey: ["cars"],
-    });
-  };
 
   const columns: GridColDef[] = [
     { field: "brand", headerName: "Brand", width: 200 },
@@ -51,7 +43,7 @@ const CarGrid = () => {
       filterable: false,
       disableColumnMenu: true,
       renderCell: (params: GridCellParams) => {
-        return <EditCar cardata={params.row} handleFlush={handleFlush} />;
+        return <EditCar cardata={params.row} />;
       },
     },
     {
@@ -88,7 +80,7 @@ const CarGrid = () => {
   } else {
     return (
       <>
-        <AddCar handleFlush={handleFlush} />
+        <AddCar />
         <DataGrid
           rows={data}
           columns={columns}

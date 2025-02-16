@@ -87,8 +87,8 @@ export const updateCar = async (carEntry: CarEntry): Promise<CarResponse> => {
   return response.data;
 }
 
-export const updateCarById = async (car: CarEntity, id: number): Promise<CarEntity> => {
-  const response = await fetch(`${import.meta.env.VITE_API_URL}/cars/${id}`,
+export const updateCarById = async (car: CarEntity): Promise<CarEntity> => {
+  const response = await fetch(`${import.meta.env.VITE_API_URL}/cars/${car.id}`,
     {
       body: JSON.stringify(car),
       headers: {

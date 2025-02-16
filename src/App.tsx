@@ -18,8 +18,8 @@ const App = () => {
       </nav>
 
       <Routes>
-        <Route path="carShop" element={<CarShop />} />
-        <Route path="ownerList" element={<Owners />} />
+        <Route path="/carShop" element={<CarShop />} />
+        <Route path="/ownerList" element={<Owners />} />
       </Routes>
     </Router>
   );

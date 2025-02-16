@@ -11,13 +11,24 @@ import Tooltip from "@mui/material/Tooltip";
 import { CarEntity, FullCarEntity } from "../types";
 import CarDialogContent from "./CarDialogContent";
 import { updateCarById } from "../api/carapi";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 type FormProps = {
   cardata: FullCarEntity;
-  handleFlush: () => void;
 };
 
-const EditCar = ({ cardata, handleFlush }: FormProps) => {
+const EditCar = ({ cardata }: FormProps) => {
+  // Add inside the AddCar component function
+  const queryClient = useQueryClient();
+  // Add inside the AddCar component function
+  const { mutate } = useMutation(updateCarById, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["cars"]);
+    },
+    onError: (err) => {
+      console.error(err);
+    },
+  });
   const [open, setOpen] = useState(false);
   const [car, setCar] = useState<CarEntity>({
     ...cardata,
@@ -43,7 +54,7 @@ const EditCar = ({ cardata, handleFlush }: FormProps) => {
   };
 
   const handleSave = () => {
-    updateCarById(car, car.id);
+    mutate(car);
     setCar({
       id: 0,
       brand: "",
@@ -55,7 +66,6 @@ const EditCar = ({ cardata, handleFlush }: FormProps) => {
       ownerId: 0,
     });
     setOpen(false);
-    handleFlush();
   };
 
   // Add handleChange function

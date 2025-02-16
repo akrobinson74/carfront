@@ -6,23 +6,20 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { CarEntity } from "../types";
 import { addACar } from "../api/carapi";
 import CarDialogContent from "./CarDialogContent";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-type CarProps = {
-  handleFlush: () => void;
-};
-
-const AddCar = ({ handleFlush }: CarProps) => {
+const AddCar = () => {
   // Add inside the AddCar component function
-  // const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
   // Add inside the AddCar component function
-  // const { mutate } = useMutation(addCar, {
-  //   onSuccess: () => {
-  //     queryClient.invalidateQueries(["cars"]);
-  //   },
-  //   onError: (err) => {
-  //     console.error(err);
-  //   },
-  // });
+  const { mutate } = useMutation(addACar, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["cars"]);
+    },
+    onError: (err) => {
+      console.error(err);
+    },
+  });
 
   const [open, setOpen] = useState(false);
   const [car, setCar] = useState<CarEntity>({
@@ -50,8 +47,7 @@ const AddCar = ({ handleFlush }: CarProps) => {
   };
 
   const handleSave = () => {
-    // mutate(car);
-    addACar(car);
+    mutate(car);
     setCar({
       id: 0,
       brand: "",
@@ -62,7 +58,6 @@ const AddCar = ({ handleFlush }: CarProps) => {
       price: 0,
       ownerId: 0,
     });
-    handleFlush();
     handleClose();
   };
 
@@ -80,4 +75,5 @@ const AddCar = ({ handleFlush }: CarProps) => {
     </>
   );
 };
+
 export default AddCar;
