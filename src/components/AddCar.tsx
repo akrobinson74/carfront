@@ -42,7 +42,6 @@ const AddCar = () => {
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(`Event: ${event.target.name}`);
     setCar({ ...car, [event.target.name]: event.target.value });
   };
 

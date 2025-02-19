@@ -9,10 +9,10 @@ const App = () => {
       <nav>
         <ul>
           <li>
-            <Link to="carShop">Car Shop</Link>
+            <Link to="/carShop">Car Shop</Link>
           </li>
           <li>
-            <Link to="ownerList">Owners</Link>
+            <Link to="/ownerList">Owners</Link>
           </li>
         </ul>
       </nav>
